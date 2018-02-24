@@ -32,6 +32,9 @@ namespace SudokuSolverTest.Other
             var solver = new PuzzleSolver(puzzle);
 
             Assert.IsTrue(solver.Solve());
+
+            var printPuzzle = new PrintPuzzle(puzzle);
+            printPuzzle.Print();
         }
     }
 }

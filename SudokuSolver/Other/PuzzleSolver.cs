@@ -12,10 +12,12 @@ namespace SudokuSolver.Other
     public class PuzzleSolver
     {
         private Puzzle _puzzle;
+        private PuzzleIterator _iterator;
 
         public PuzzleSolver(Puzzle puzzle)
         {
             _puzzle = puzzle;
+            _iterator = new PuzzleIterator(_puzzle);
         }
 
 
@@ -23,40 +25,64 @@ namespace SudokuSolver.Other
         public bool Solve()
         {
 
-            var iterator = new PuzzleIterator(_puzzle);
-            iterator.First();
-            SolveCell();
+            _iterator.First();
+            return SolveCell();
 
-            return true;
         }
 
-        private void SolveCell()
+        private bool SolveCell()
         {
             var savePuzzle = new Puzzle(_puzzle);
-
             var acts = new ActOnAllSegments(savePuzzle);
 
-            while (true) //for each candidate 
+            while (FindNextEmptyCell())
             {
-                _puzzle = savePuzzle; //revert to saved
 
-                //guess
-                
-                //reduce
-                while (!acts.Execute(new ReduceCandidates()));
+                var candidates = _iterator.GetCurrent().Candidates;
 
-                //validate (needed? possibly)
-                if (!acts.Execute(new ValidateSection()))
+                if(candidates.Count == 0)
                 {
-                    continue;
+                    return false;
                 }
 
-                //recursively solve
-                SolveCell();
+                foreach (CellValue c in candidates) //for each candidate 
+                {
+                    _puzzle = savePuzzle; //revert to saved
+
+                    _iterator.SetCurrent(new Cell(c.Value));
+
+                    //reduce
+                    while (!acts.Execute(new ReduceCandidates())) ;
+
+                    //validate (needed? possibly)
+                    if (!acts.Execute(new ValidateSection()))
+                    {
+                        continue;
+                    }
+
+                    //recursively solve
+                    if (SolveCell())
+                    {
+                        return true;
+                    }
+                } 
             }
+            return true;
 
         }
 
+        private bool FindNextEmptyCell()
+        {
+            while (_iterator.HasNext())
+            {
+                if (_iterator.GetCurrent().Value == CellValue.Unknown.Value)
+                {
+                    return true;
+                }
+                _iterator.Next();
+            }
 
+            return false;
+        }
     }
 }
