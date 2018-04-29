@@ -1,11 +1,7 @@
 ﻿using NUnit.Framework;
+using SudokuSolver.Actions;
 using SudokuSolver.Other;
 using SudokuSolver.SudokuPuzzle;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SudokuSolverTest.Other
 {
@@ -30,11 +26,13 @@ namespace SudokuSolverTest.Other
                 });
 
             var solver = new PuzzleSolver(puzzle);
-
-            Assert.IsTrue(solver.Solve());
-
+            var acts = new ActOnAllSegments(puzzle);
             var printPuzzle = new PrintPuzzle(puzzle);
+
+            solver.Solve();
             printPuzzle.Print();
+
+            Assert.IsTrue(acts.Execute(new ValidateSection()));           
         }
     }
 }

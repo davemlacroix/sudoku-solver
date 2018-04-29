@@ -20,24 +20,21 @@ namespace SudokuSolver.Other
             _iterator = new PuzzleIterator(_puzzle);
         }
 
-
-
         public bool Solve()
         {
-
             _iterator.First();
             return SolveCell();
-
         }
 
         private bool SolveCell()
         {
             var savePuzzle = new Puzzle(_puzzle);
-            var acts = new ActOnAllSegments(savePuzzle);
+            var acts = new ActOnAllSegments(_puzzle);
+
+            while (!acts.Execute(new ReduceCandidates()));
 
             while (FindNextEmptyCell())
             {
-
                 var candidates = _iterator.GetCurrent().Candidates;
 
                 if(candidates.Count == 0)
@@ -47,20 +44,11 @@ namespace SudokuSolver.Other
 
                 foreach (CellValue c in candidates) //for each candidate 
                 {
-                    _puzzle = savePuzzle; //revert to saved
-
+                    _puzzle = savePuzzle; 
                     _iterator.SetCurrent(new Cell(c.Value));
 
-                    //reduce
                     while (!acts.Execute(new ReduceCandidates())) ;
 
-                    //validate (needed? possibly)
-                    if (!acts.Execute(new ValidateSection()))
-                    {
-                        continue;
-                    }
-
-                    //recursively solve
                     if (SolveCell())
                     {
                         return true;
