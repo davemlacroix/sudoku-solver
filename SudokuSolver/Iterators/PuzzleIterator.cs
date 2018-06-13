@@ -1,11 +1,10 @@
-﻿using SudokuSolver.SudokuPuzzle;
-using System;
+﻿using SudokuSolver.Other;
+using SudokuSolver.SudokuPuzzle;
 
 namespace SudokuSolver.Iterators
 {
     public class PuzzleIterator
     {
-
         private Puzzle _puzzle;
         private int _position;
 
@@ -22,21 +21,22 @@ namespace SudokuSolver.Iterators
 
         public void Next()
         {
+            if (!IsDone())
+            {
+                throw new System.InvalidOperationException("Iterator has reached the end of section");
+            }
+
             _position++;
         }
 
-        public bool HasNext()
+        public bool IsDone()
         {
-            return (_position < 81);
+            return (_position < Constants.NumberOfCellsInPuzzle);
         }
 
         public Cell GetCurrent()
         {
-            if (HasNext())
-            {
-                return _puzzle.GetCell(GetRow(), GetCol());
-            }
-            throw new System.InvalidOperationException("Iterator has reached the end of section");
+            return _puzzle.GetCell(GetRow(), GetCol());
         }
 
         public void SetCurrent(Cell cell)
@@ -46,12 +46,12 @@ namespace SudokuSolver.Iterators
 
         private int GetRow()
         {
-            return _position / 9;
+            return _position / Constants.NumberOfCellsInSegment;
         }
 
         private int GetCol()
         {
-            return _position % 9;
+            return _position % Constants.NumberOfCellsInSegment;
         }
     }
 }

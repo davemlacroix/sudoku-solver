@@ -52,6 +52,7 @@
     <Compile Include="Iterators\RowIterator.cs" />
     <Compile Include="Iterators\SegmentIterator.cs" />
     <Compile Include="Iterators\SubGridIterator.cs" />
+    <Compile Include="Other\Constants.cs" />
     <Compile Include="Other\PrintPuzzle.cs" />
     <Compile Include="Other\PuzzleSolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

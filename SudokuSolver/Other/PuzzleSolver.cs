@@ -1,11 +1,6 @@
 ﻿using SudokuSolver.Actions;
 using SudokuSolver.Iterators;
 using SudokuSolver.SudokuPuzzle;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SudokuSolver.Other
 {
@@ -37,14 +32,14 @@ namespace SudokuSolver.Other
             {
                 var candidates = _iterator.GetCurrent().Candidates;
 
-                if(candidates.Count == 0)
+                if (candidates.Count == 0)
                 {
                     return false;
                 }
 
-                foreach (CellValue c in candidates) //for each candidate 
+                foreach (CellValue c in candidates) //for each candidate
                 {
-                    _puzzle = savePuzzle; 
+                    _puzzle = savePuzzle;
                     _iterator.SetCurrent(new Cell(c.Value));
 
                     while (!acts.Execute(new ReduceCandidates())) ;
@@ -53,15 +48,14 @@ namespace SudokuSolver.Other
                     {
                         return true;
                     }
-                } 
+                }
             }
             return true;
-
         }
 
         private bool FindNextEmptyCell()
         {
-            while (_iterator.HasNext())
+            while (_iterator.IsDone())
             {
                 if (_iterator.GetCurrent().Value == CellValue.Unknown.Value)
                 {
