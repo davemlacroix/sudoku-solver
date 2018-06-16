@@ -26,7 +26,7 @@ namespace SudokuSolver.Actions
             _values = new List<int>();
 
             iterator.First();
-            while (iterator.HasNext())
+            while (!iterator.IsDone())
             {
                 var value = iterator.GetCurrent().Value;
                 if (value != CellValue.Unknown.Value)
@@ -42,7 +42,7 @@ namespace SudokuSolver.Actions
         {
             var finished = true;
             iterator.First();
-            while (iterator.HasNext())
+            while (!iterator.IsDone())
             {
                 var cell = iterator.GetCurrent();
 

@@ -32,14 +32,14 @@ namespace SudokuSolver.Iterators
             _position++;
         }
 
-        public bool HasNext()
+        public bool IsDone()
         {
-            return (_position < 9);
+            return (_position >= 9);
         }
 
         public Cell GetCurrent()
         {
-            if (HasNext())
+            if (!IsDone())
             {
                 return _puzzle.GetCell(GetRow(), GetCol());
             }

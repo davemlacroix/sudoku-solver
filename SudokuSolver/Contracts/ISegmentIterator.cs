@@ -6,7 +6,7 @@ namespace SudokuSolver.Contracts
     {
         void First();
         void Next();
-        bool HasNext();
+        bool IsDone();
         Cell GetCurrent();
         void SetCurrent(Cell cell);
     }

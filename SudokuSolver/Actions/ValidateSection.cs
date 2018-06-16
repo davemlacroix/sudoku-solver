@@ -21,7 +21,7 @@ namespace SudokuSolver.Actions
             _values = new List<int>();
 
             iterator.First();
-            while (iterator.HasNext())
+            while (!iterator.IsDone())
             {
                 var cell = iterator.GetCurrent();
 

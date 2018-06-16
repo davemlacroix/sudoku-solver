@@ -19,7 +19,7 @@ namespace SudokuSolver.Actions
             var success = true;
 
             iterator.First();
-            while (iterator.HasNext)
+            while (!iterator.IsDone())
             {
                 if (!actionType.Execute(iterator.GetNext())) { success = false; }
             }

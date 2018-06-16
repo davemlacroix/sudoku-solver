@@ -55,7 +55,7 @@ namespace SudokuSolver.Other
 
         private bool FindNextEmptyCell()
         {
-            while (_iterator.IsDone())
+            while (!_iterator.IsDone())
             {
                 if (_iterator.GetCurrent().Value == CellValue.Unknown.Value)
                 {

@@ -9,7 +9,7 @@ namespace SudokuSolver.Iterators
         private int _row;
         private int _col;
         private int _subGrid;
-        private bool _hasNext;
+        private bool _isDone;
 
         private PuzzleIteratorFactory _iteratorFactory;
         private Puzzle _puzzle;
@@ -26,10 +26,10 @@ namespace SudokuSolver.Iterators
             _row = 0;
             _col = 0;
             _subGrid = 0;
-            _hasNext = true;
+            _isDone = false;
         }
 
-        public bool HasNext { get => _hasNext; }
+        public bool IsDone() => _isDone;
 
         public ISegmentIterator GetNext()
         {
@@ -50,7 +50,7 @@ namespace SudokuSolver.Iterators
             {
                 index = _subGrid++;
                 type = IteratorType.SubGrid;
-                if (_subGrid == 9) { _hasNext = false; }
+                if (_subGrid == 9) { _isDone = true; }
             }
             else
             {

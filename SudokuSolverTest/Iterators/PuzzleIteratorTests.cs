@@ -49,23 +49,23 @@ namespace SudokuSolverTest.Iterators
         }
 
         [Test]
-        public void HasNext_LastElement_ReturnsFalse()
+        public void IsDone_LastElement_ReturnsTrue()
         {
 
             for (int i = 0; i < Constants.NumberOfCellsInPuzzle; i++)
             {
                 _iterator.Next();
             }
-            Assert.IsFalse(_iterator.IsDone());
+            Assert.IsTrue(_iterator.IsDone());
         }
 
         [Test]
-        public void IsDone_NotLastElement_ReturnsTrue()
+        public void IsDone_NotLastElement_ReturnsFalse()
         {
 
             for (int i = 0; i < Constants.NumberOfCellsInPuzzle; i++)
             {
-                Assert.IsTrue(_iterator.IsDone());
+                Assert.IsFalse(_iterator.IsDone());
                 _iterator.Next();
             }
         }
@@ -99,7 +99,7 @@ namespace SudokuSolverTest.Iterators
             foreach (int value in _testPuzzle)
             {
                 Assert.AreEqual(value, _iterator.GetCurrent().Value);
-                if (_iterator.IsDone()) { _iterator.Next(); }
+                if (!_iterator.IsDone()) { _iterator.Next(); }
             }
 
         }

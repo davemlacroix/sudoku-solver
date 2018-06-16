@@ -21,7 +21,7 @@ namespace SudokuSolver.Iterators
 
         public void Next()
         {
-            if (!IsDone())
+            if (IsDone())
             {
                 throw new System.InvalidOperationException("Iterator has reached the end of section");
             }
@@ -31,7 +31,7 @@ namespace SudokuSolver.Iterators
 
         public bool IsDone()
         {
-            return (_position < Constants.NumberOfCellsInPuzzle);
+            return (_position >= Constants.NumberOfCellsInPuzzle);
         }
 
         public Cell GetCurrent()
