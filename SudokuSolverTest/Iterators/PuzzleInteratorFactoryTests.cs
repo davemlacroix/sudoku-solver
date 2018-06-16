@@ -14,7 +14,7 @@ namespace SudokuSolverTest.Iterators
         {
             var puzzle = Substitute.For<Puzzle>();
  
-            var iterator = new PuzzleIteratorFactory().GetIterator(IteratorType.Row, puzzle, 1);
+            var iterator = new SegmentIteratorFactory().GetIterator(IteratorType.Row, puzzle, 1);
 
             Assert.IsInstanceOf<RowIterator>(iterator);
         }
@@ -24,7 +24,7 @@ namespace SudokuSolverTest.Iterators
         {
             var puzzle = Substitute.For<Puzzle>();
 
-            var iterator = new PuzzleIteratorFactory().GetIterator(IteratorType.Column, puzzle, 1);
+            var iterator = new SegmentIteratorFactory().GetIterator(IteratorType.Column, puzzle, 1);
 
             Assert.IsInstanceOf<ColumnIterator>(iterator);
         }
@@ -34,7 +34,7 @@ namespace SudokuSolverTest.Iterators
         {
             var puzzle = Substitute.For<Puzzle>();
 
-            var iterator = new PuzzleIteratorFactory().GetIterator(IteratorType.SubGrid, puzzle, 1);
+            var iterator = new SegmentIteratorFactory().GetIterator(IteratorType.SubGrid, puzzle, 1);
 
             Assert.IsInstanceOf<SubGridIterator>(iterator);
         }

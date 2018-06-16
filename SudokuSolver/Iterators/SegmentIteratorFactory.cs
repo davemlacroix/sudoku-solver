@@ -4,7 +4,7 @@ using System;
 
 namespace SudokuSolver.Iterators
 {
-    public class PuzzleIteratorFactory
+    public class SegmentIteratorFactory
     {
         public ISegmentIterator GetIterator(IteratorType type, Puzzle puzzle, int index)
         {

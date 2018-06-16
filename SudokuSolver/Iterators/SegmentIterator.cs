@@ -13,14 +13,14 @@ namespace SudokuSolver.Iterators
         private int _index;
         private bool _isDone;
 
-        private PuzzleIteratorFactory _iteratorFactory;
+        private SegmentIteratorFactory _iteratorFactory;
         private Puzzle _puzzle;
         private IteratorType _type;
 
         public SegmentIterator(Puzzle puzzle)
         {
             _puzzle = puzzle;
-            _iteratorFactory = new PuzzleIteratorFactory();
+            _iteratorFactory = new SegmentIteratorFactory();
             First();
         }
 

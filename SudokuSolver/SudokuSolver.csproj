@@ -49,7 +49,7 @@
     <Compile Include="Contracts\ISegmentIterator.cs" />
     <Compile Include="Contracts\IteratorTypes.cs" />
     <Compile Include="Iterators\ColumnIterator.cs" />
-    <Compile Include="Iterators\PuzzleIteratorFactory.cs" />
+    <Compile Include="Iterators\SegmentIteratorFactory.cs" />
     <Compile Include="Iterators\RowIterator.cs" />
     <Compile Include="Iterators\SegmentIterator.cs" />
     <Compile Include="Iterators\SubGridIterator.cs" />
