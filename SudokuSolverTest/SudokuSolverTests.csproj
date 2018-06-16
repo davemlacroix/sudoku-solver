@@ -61,6 +61,7 @@
     <Compile Include="Iterators\ColumnIteratorTests.cs" />
     <Compile Include="Iterators\PuzzleInteratorFactoryTests.cs" />
     <Compile Include="Iterators\PuzzleIteratorTests.cs" />
+    <Compile Include="Iterators\RowIteratorTests.cs" />
     <Compile Include="Other\PuzzleSolverTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SudoduPuzzle\CellTests.cs" />
