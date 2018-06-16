@@ -1,5 +1,6 @@
 ﻿using System;
 using SudokuSolver.Contracts;
+using SudokuSolver.Other;
 using SudokuSolver.SudokuPuzzle;
 
 namespace SudokuSolver.Iterators
@@ -29,21 +30,22 @@ namespace SudokuSolver.Iterators
 
         public void Next()
         {
+            if (IsDone())
+            {
+                throw new System.InvalidOperationException("Iterator has reached the end of section");
+            }
             _position++;
         }
 
         public bool IsDone()
         {
-            return (_position >= 9);
+            return (_position >= Constants.NumberOfCellsInSegment);
         }
 
         public Cell GetCurrent()
         {
-            if (!IsDone())
-            {
-                return _puzzle.GetCell(GetRow(), GetCol());
-            }
-            throw new System.InvalidOperationException("Iterator has reached the end of section");
+            return _puzzle.GetCell(GetRow(), GetCol());
+
         }
 
         public void SetCurrent(Cell cell)
@@ -53,7 +55,7 @@ namespace SudokuSolver.Iterators
 
         private void ValidateIndex(int index)
         {
-            if (index < 0 || index > 8)
+            if (index < 0 || index >= Constants.NumberOfCellsInSegment)
             {
                 throw new ArgumentOutOfRangeException("Invalid index of " + index + ".");
             }

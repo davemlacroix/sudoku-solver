@@ -7,21 +7,21 @@ using System;
 namespace SudokuSolverTest.Iterators
 {
     [TestFixture]
-    internal class RowIteratorTests
+    internal class SubGridIteratorTests
     {
         private Puzzle _puzzle;
-        private RowIterator _iterator;
+        private SubGridIterator _iterator;
         private readonly int[,] _testPuzzle = new int[9, 9]
         {
-            { 1, 2, 0, 0, 0, 4, 0, 8, 5 },
-            { 7, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 2, 0, 0, 0, 0, 0, 0 },
+            { 1, 2, 3, 0, 0, 4, 3, 4, 2 },
+            { 4, 5, 6, 0, 0, 0, 0, 0, 0 },
+            { 7, 8, 9, 0, 0, 0, 8, 7, 9 },
             { 0, 0, 3, 0, 0, 0, 0, 0, 0 },
             { 0, 0, 0, 0, 0, 0, 0, 0, 0 },
             { 4, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-            { 0, 0, 8, 0, 0, 0, 0, 0, 0 },
-            { 2, 0, 0, 0, 0, 0, 0, 0, 3 }
+            { 0, 0, 0, 0, 0, 0, 9, 8, 7 },
+            { 0, 0, 8, 0, 0, 0, 6, 5, 4 },
+            { 2, 0, 0, 0, 0, 0, 3, 2, 1 }
         };
 
 
@@ -29,7 +29,7 @@ namespace SudokuSolverTest.Iterators
         public void SetUp()
         {
             _puzzle = new Puzzle(_testPuzzle);
-            _iterator = new RowIterator(_puzzle, 0);
+            _iterator = new SubGridIterator(_puzzle, 0);
         }
 
 
@@ -44,7 +44,7 @@ namespace SudokuSolverTest.Iterators
         {
 
             Assert.Throws<ArgumentOutOfRangeException>(
-                 () => new RowIterator(_puzzle, Constants.NumberOfCellsInSegment));
+                 () => new SubGridIterator(_puzzle, Constants.NumberOfCellsInSegment));
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace SudokuSolverTest.Iterators
         {
 
             Assert.Throws<ArgumentOutOfRangeException>(
-                 () => new RowIterator(_puzzle, -1));
+                 () => new SubGridIterator(_puzzle, -1));
         }
 
         [Test]
@@ -110,14 +110,14 @@ namespace SudokuSolverTest.Iterators
             Assert.AreEqual(4, _iterator.GetCurrent().Value);
         }
 
-        [TestCase(0, new int[9] { 1, 2, 0, 0, 0, 4, 0, 8, 5 })]
-        [TestCase(2, new int[9] { 0, 0, 2, 0, 0, 0, 0, 0, 0 })]
-        [TestCase(8, new int[9] { 2, 0, 0, 0, 0, 0, 0, 0, 3 })]
-        public void Next_IteratesThroughFirstColumn_IteratesThroughPuzzle(int row, int[] rowValues)
+        [TestCase(0, new int[9] { 1, 2, 3, 4, 5, 6, 7, 8, 9 })]
+        [TestCase(2, new int[9] { 3, 4, 2, 0, 0, 0, 8, 7, 9 })]
+        [TestCase(8, new int[9] { 9, 8, 7, 6, 5, 4, 3, 2, 1 })]
+        public void Next_IteratesThroughFirstColumn_IteratesThroughPuzzle(int grid, int[] gridValues)
         {
 
-            _iterator = new RowIterator(_puzzle, row);
-            foreach (int value in rowValues)
+            _iterator = new SubGridIterator(_puzzle, grid);
+            foreach (int value in gridValues)
             {
                 Assert.AreEqual(value, _iterator.GetCurrent().Value);
                 if (!_iterator.IsDone()) { _iterator.Next(); }

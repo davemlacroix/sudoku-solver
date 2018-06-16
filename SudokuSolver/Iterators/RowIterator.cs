@@ -1,4 +1,5 @@
 ﻿using SudokuSolver.Contracts;
+using SudokuSolver.Other;
 using SudokuSolver.SudokuPuzzle;
 using System;
 
@@ -35,7 +36,7 @@ namespace SudokuSolver.Iterators
 
         public bool IsDone()
         {
-            return (_position >= 9);
+            return (_position >= Constants.NumberOfCellsInSegment);
         }
 
         public Cell GetCurrent()
@@ -53,7 +54,7 @@ namespace SudokuSolver.Iterators
 
         private void ValidateIndex(int index)
         {
-            if (index < 0 || index > 8)
+            if (index < 0 || index >= Constants.NumberOfCellsInSegment)
             {
                 throw new ArgumentOutOfRangeException("Invalid index of " + index + ".");
             }
