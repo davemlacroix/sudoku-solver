@@ -2,11 +2,8 @@
 
 namespace SudokuSolver.Contracts
 {
-    public interface ISegmentIterator
+    public interface ISegmentIterator : IIterator
     {
-        void First();
-        void Next();
-        bool IsDone();
         Cell GetCurrent();
         void SetCurrent(Cell cell);
     }

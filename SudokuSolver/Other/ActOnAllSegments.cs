@@ -21,7 +21,8 @@ namespace SudokuSolver.Actions
             iterator.First();
             while (!iterator.IsDone())
             {
-                if (!actionType.Execute(iterator.GetNext())) { success = false; }
+                iterator.Next();
+                if (!actionType.Execute(iterator.GetCurrent())) { success = false; }
             }
 
             return success;

@@ -62,6 +62,7 @@
     <Compile Include="Iterators\PuzzleInteratorFactoryTests.cs" />
     <Compile Include="Iterators\PuzzleIteratorTests.cs" />
     <Compile Include="Iterators\RowIteratorTests.cs" />
+    <Compile Include="Iterators\SegmentIteratorTests.cs" />
     <Compile Include="Iterators\SubGridIteratorTests.cs" />
     <Compile Include="Other\PuzzleSolverTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

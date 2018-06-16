@@ -1,9 +1,11 @@
-﻿namespace SudokuSolver.Contracts
+﻿using SudokuSolver.SudokuPuzzle;
+
+namespace SudokuSolver.Contracts
 {
     public interface IIterator
     {
         void First();
         void Next();
-        bool HasNext();
+        bool IsDone();
     }
 }

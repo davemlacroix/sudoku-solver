@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\IIterator.cs" />
     <Compile Include="Iterators\PuzzleIterator.cs" />
     <Compile Include="Other\ActOnAllSegments.cs" />
     <Compile Include="Actions\ReduceCandidates.cs" />

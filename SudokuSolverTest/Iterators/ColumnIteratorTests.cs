@@ -113,7 +113,7 @@ namespace SudokuSolverTest.Iterators
         [TestCase(0, new int[9] { 1, 7, 0, 0, 0, 4, 0, 0, 2 })]
         [TestCase(2, new int[9] { 0, 0, 2, 3, 0, 0, 0, 8, 0 })]
         [TestCase(8, new int[9] { 5, 0, 0, 0, 0, 0, 0, 0, 3 })]
-        public void Next_IteratesThroughFirstColumn_IteratesThroughPuzzle(int column, int [] columnValues)
+        public void Next_IteratesThroughColumn_HasExpected(int column, int [] columnValues)
         {
 
             _iterator = new ColumnIterator(_puzzle, column);

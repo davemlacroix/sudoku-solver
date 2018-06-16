@@ -1,9 +1,10 @@
-﻿using SudokuSolver.Other;
+﻿using SudokuSolver.Contracts;
+using SudokuSolver.Other;
 using SudokuSolver.SudokuPuzzle;
 
 namespace SudokuSolver.Iterators
 {
-    public class PuzzleIterator
+    public class PuzzleIterator : IIterator
     {
         private Puzzle _puzzle;
         private int _position;
