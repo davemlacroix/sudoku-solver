@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Actions\ReduceCandidatesTests.cs" />
     <Compile Include="Actions\ValidateSectionTests.cs" />
+    <Compile Include="Iterators\ColumnIteratorTests.cs" />
     <Compile Include="Iterators\PuzzleInteratorFactoryTests.cs" />
     <Compile Include="Iterators\PuzzleIteratorTests.cs" />
     <Compile Include="Other\PuzzleSolverTests.cs" />
