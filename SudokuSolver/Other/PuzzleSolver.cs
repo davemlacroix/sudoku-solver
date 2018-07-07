@@ -30,7 +30,6 @@ namespace SudokuSolver.Other
         {
             var savePuzzle = new Puzzle(_puzzle);
             var action = new ActOnAllSegments(_puzzle);
-            var memento = new PuzzleMemento(_puzzle);
             if (!FindNextEmptyCell(iterator))
             {
                 return true; //may not be solved;
@@ -41,7 +40,8 @@ namespace SudokuSolver.Other
             {
                 return false;
             }
-            memento.SaveState();
+            var memento = _puzzle.CreateMemento();
+
             var solved = false;
             foreach (var candidate in candidates)
             {
@@ -50,7 +50,7 @@ namespace SudokuSolver.Other
                     return true;
                 }
 
-                memento.Undo();
+                _puzzle.SetMemento(memento);
 
                 iterator.SetCurrent(new Cell(candidate.Value));
                 action = new ActOnAllSegments(_puzzle);

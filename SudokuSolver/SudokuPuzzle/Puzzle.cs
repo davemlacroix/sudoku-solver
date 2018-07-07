@@ -2,6 +2,7 @@
 using SudokuSolver.Iterators;
 using System;
 using System.Linq;
+using SudokuSolver.Other;
 
 namespace SudokuSolver.SudokuPuzzle
 {
@@ -38,14 +39,7 @@ namespace SudokuSolver.SudokuPuzzle
 
         public Puzzle(Puzzle puzzle)
         {
-            _puzzle = new Cell[9, 9];
-            for (int row = 0; row < 9; row++)
-            {
-                for (int col = 0; col < 9; col++)
-                {
-                    _puzzle[row, col] = new Cell(puzzle.GetCell(row, col));
-                }
-            }
+            _puzzle = CopyPuzzle(puzzle._puzzle);
         }
 
         public void SetCell(Cell cell, int row, int col)
@@ -64,45 +58,19 @@ namespace SudokuSolver.SudokuPuzzle
             return new Cell(_puzzle[row, col]);
         }
 
-        private void ValidateIndex(int index)
+        public IMemento CreateMemento()
         {
-            if (index < 0 || index > 8)
-            {
-                throw new ArgumentOutOfRangeException("Invalid index of " + index + ".");
-            }
+            return new PuzzleMemento() { State = CopyPuzzle(_puzzle)};
         }
 
-        private void ValidateSize(int size)
+        public void SetMemento(IMemento memento)
         {
-            if (size != 9)
-            {
-                throw new ArgumentOutOfRangeException("Invalid array size of " + size + ".");
-            }
+            _puzzle = CopyPuzzle((Cell[,]) memento.State);
         }
 
-        public Cell[,] GetState()
+        private class PuzzleMemento : IMemento
         {
-
-            var copy = new Cell[9, 9];
-            for (int row = 0; row < 9; row++)
-            {
-                for (int col = 0; col < 9; col++)
-                {
-                    copy[row, col] = new Cell(_puzzle[row, col]);
-                }
-            }
-            return copy;
-        }
-
-        public void SetState(Cell [,] puzzle)
-        {
-            for (int row = 0; row < 9; row++)
-            {
-                for (int col = 0; col < 9; col++)
-                {
-                    _puzzle[row, col] = new Cell(puzzle[row, col]);
-                }
-            }
+            public object State { get; set; }
         }
 
         public bool IsCompleted()
@@ -120,6 +88,35 @@ namespace SudokuSolver.SudokuPuzzle
             }
 
             return true;
+        }
+
+        private void ValidateIndex(int index)
+        {
+            if (index < 0 || index > 8)
+            {
+                throw new ArgumentOutOfRangeException("Invalid index of " + index + ".");
+            }
+        }
+
+        private void ValidateSize(int size)
+        {
+            if (size != 9)
+            {
+                throw new ArgumentOutOfRangeException("Invalid array size of " + size + ".");
+            }
+        }
+
+        private Cell[,] CopyPuzzle(Cell[,] puzzle)
+        {
+            var copy = new Cell[9, 9];
+            for (int row = 0; row < Constants.NumberOfCellsInSegment; row++)
+            {
+                for (int col = 0; col < Constants.NumberOfCellsInSegment; col++)
+                {
+                    copy[row, col] = new Cell(puzzle[row, col]);
+                }
+            }
+            return copy;
         }
     }
 }
