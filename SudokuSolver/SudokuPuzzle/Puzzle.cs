@@ -1,7 +1,5 @@
 ﻿using SudokuSolver.Contracts;
-using SudokuSolver.Iterators;
 using System;
-using System.Linq;
 using SudokuSolver.Other;
 
 namespace SudokuSolver.SudokuPuzzle

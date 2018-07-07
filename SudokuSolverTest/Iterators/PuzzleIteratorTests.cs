@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using SudokuSolver.Contracts;
 using SudokuSolver.Iterators;
 using SudokuSolver.Other;
 using SudokuSolver.SudokuPuzzle;

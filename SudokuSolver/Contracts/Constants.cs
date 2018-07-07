@@ -1,4 +1,4 @@
-﻿namespace SudokuSolver.Other
+﻿namespace SudokuSolver.Contracts
 {
     public static class Constants
     {
