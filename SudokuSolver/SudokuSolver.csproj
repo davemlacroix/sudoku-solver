@@ -60,6 +60,7 @@
     <Compile Include="SudokuPuzzle\Cell.cs" />
     <Compile Include="SudokuPuzzle\CellValue.cs" />
     <Compile Include="SudokuPuzzle\Puzzle.cs" />
+    <Compile Include="SudokuPuzzle\PuzzleMemento.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

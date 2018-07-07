@@ -9,6 +9,12 @@ namespace SudokuSolver.Iterators
         private Puzzle _puzzle;
         private int _position;
 
+        public PuzzleIterator(PuzzleIterator iterator)
+        {
+            _puzzle = iterator._puzzle;
+            _position = iterator._position;
+        }
+
         public PuzzleIterator(Puzzle puzzle)
         {
             _puzzle = puzzle;

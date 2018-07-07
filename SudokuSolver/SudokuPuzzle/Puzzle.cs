@@ -79,5 +79,47 @@ namespace SudokuSolver.SudokuPuzzle
                 throw new ArgumentOutOfRangeException("Invalid array size of " + size + ".");
             }
         }
+
+        public Cell[,] GetState()
+        {
+
+            var copy = new Cell[9, 9];
+            for (int row = 0; row < 9; row++)
+            {
+                for (int col = 0; col < 9; col++)
+                {
+                    copy[row, col] = new Cell(_puzzle[row, col]);
+                }
+            }
+            return copy;
+        }
+
+        public void SetState(Cell [,] puzzle)
+        {
+            for (int row = 0; row < 9; row++)
+            {
+                for (int col = 0; col < 9; col++)
+                {
+                    _puzzle[row, col] = new Cell(puzzle[row, col]);
+                }
+            }
+        }
+
+        public bool IsCompleted()
+        {
+            //this needs to be replaced
+            for (int row = 0; row < 9; row++)
+            {
+                for (int col = 0; col < 9; col++)
+                {
+                    if(_puzzle[row, col].Value == CellValue.Unknown.Value)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
     }
 }

@@ -1,67 +1,83 @@
 ﻿using SudokuSolver.Actions;
+using SudokuSolver.Contracts;
 using SudokuSolver.Iterators;
 using SudokuSolver.SudokuPuzzle;
+using System;
 
 namespace SudokuSolver.Other
 {
     public class PuzzleSolver
     {
         private Puzzle _puzzle;
-        private PuzzleIterator _iterator;
 
         public PuzzleSolver(Puzzle puzzle)
         {
             _puzzle = puzzle;
-            _iterator = new PuzzleIterator(_puzzle);
         }
 
         public bool Solve()
         {
-            _iterator.First();
-            return SolveCell();
+            var iterator = new PuzzleIterator(_puzzle);
+            iterator.First();
+
+            var action = new ActOnAllSegments(_puzzle);
+            while (!action.Execute(new ReduceCandidates()));
+
+            return SolveCell(new PuzzleIterator(iterator));
         }
 
-        private bool SolveCell()
+        private bool SolveCell(PuzzleIterator iterator)
         {
             var savePuzzle = new Puzzle(_puzzle);
-            var acts = new ActOnAllSegments(_puzzle);
-
-            while (!acts.Execute(new ReduceCandidates()));
-
-            while (FindNextEmptyCell())
+            var action = new ActOnAllSegments(_puzzle);
+            var memento = new PuzzleMemento(_puzzle);
+            if (!FindNextEmptyCell(iterator))
             {
-                var candidates = _iterator.GetCurrent().Candidates;
-
-                if (candidates.Count == 0)
-                {
-                    return false;
-                }
-
-                foreach (CellValue c in candidates) //for each candidate
-                {
-                    _puzzle = savePuzzle;
-                    _iterator.SetCurrent(new Cell(c.Value));
-
-                    while (!acts.Execute(new ReduceCandidates())) ;
-
-                    if (SolveCell())
-                    {
-                        return true;
-                    }
-                }
+                return true; //may not be solved;
             }
-            return true;
-        }
 
-        private bool FindNextEmptyCell()
-        {
-            while (!_iterator.IsDone())
+            var candidates = iterator.GetCurrent().Candidates;
+            if (candidates.Count == 0)
             {
-                if (_iterator.GetCurrent().Value == CellValue.Unknown.Value)
+                return false;
+            }
+            memento.SaveState();
+            var solved = false;
+            foreach (var candidate in candidates)
+            {
+                if(_puzzle.IsCompleted() && action.Execute(new ValidateSection()))
                 {
                     return true;
                 }
-                _iterator.Next();
+
+                memento.Undo();
+
+                iterator.SetCurrent(new Cell(candidate.Value));
+                action = new ActOnAllSegments(_puzzle);
+                while (!action.Execute(new ReduceCandidates())) ;
+
+                if (!action.Execute(new ValidateSection()))
+                {
+                    continue;
+                }
+                if (!SolveCell(new PuzzleIterator(iterator)))
+                {
+                    continue;
+                }
+                solved = true;
+            }
+            return solved;
+        }
+
+        private bool FindNextEmptyCell(PuzzleIterator iterator)
+        {
+            while (!iterator.IsDone())
+            {
+                if (iterator.GetCurrent().Value == CellValue.Unknown.Value)
+                {
+                    return true;
+                }
+                iterator.Next();
             }
 
             return false;

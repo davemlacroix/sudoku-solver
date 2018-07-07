@@ -36,10 +36,10 @@ namespace SudokuSolverTest.Other
         }
 
         [Test]
-        [Ignore("skip")]
         public void Solve_Puzzle2_SolvesPuzzle()
         {
 
+            
             var puzzle = new Puzzle(new int[9, 9]
                 {
                     { 0, 7, 1, 0, 9, 0, 8, 0, 0},

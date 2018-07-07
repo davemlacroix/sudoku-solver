@@ -1,6 +1,8 @@
 ﻿using SudokuSolver.Contracts;
 using SudokuSolver.Iterators;
+using SudokuSolver.Other;
 using SudokuSolver.SudokuPuzzle;
+using System;
 
 namespace SudokuSolver.Actions
 {
@@ -17,12 +19,16 @@ namespace SudokuSolver.Actions
         {
             var iterator = new SegmentIterator(_puzzle);
             var success = true;
-
+            
             iterator.First();
             while (!iterator.IsDone())
             {
+                
+                if (!actionType.Execute(iterator.GetCurrent()))
+                {
+                    success = false;
+                }
                 iterator.Next();
-                if (!actionType.Execute(iterator.GetCurrent())) { success = false; }
             }
 
             return success;
