@@ -27,20 +27,14 @@ namespace SudokuSolver.Other
 
         private bool SolveCell(PuzzleIterator iterator)
         {
-            var savePuzzle = new Puzzle(_puzzle);
-            var action = new ActOnAllSegments(_puzzle);
             if (!FindNextUndefinedCell(iterator))
             {
                 return true; //may not be solved;
             }
 
-            var candidates = iterator.GetCurrent().Candidates;
-            if (candidates.Count == 0)
-            {
-                return false;
-            }
             var memento = _puzzle.CreateMemento();
 
+            var candidates = iterator.GetCurrent().Candidates;
             foreach (var candidate in candidates)
             {
                 _puzzle.SetMemento(memento);
