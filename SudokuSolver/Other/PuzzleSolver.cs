@@ -29,7 +29,7 @@ namespace SudokuSolver.Other
         {
             var savePuzzle = new Puzzle(_puzzle);
             var action = new ActOnAllSegments(_puzzle);
-            if (!GetNextUndefinedCell(iterator))
+            if (!FindNextUndefinedCell(iterator))
             {
                 return true; //may not be solved;
             }
@@ -41,30 +41,25 @@ namespace SudokuSolver.Other
             }
             var memento = _puzzle.CreateMemento();
 
-            var solved = false;
             foreach (var candidate in candidates)
             {
-                if (_puzzle.IsCompleted() && PuzzleIsValid())
-                {
-                    return true;
-                }
-
                 _puzzle.SetMemento(memento);
 
-                iterator.SetCurrent(new Cell(candidate.Value));
+                var cell = new Cell(candidate.Value);
+                iterator.SetCurrent(cell);
                 ReduceCandidates();
 
-                if (!PuzzleIsValid())
+                if(PuzzleIsSolved(iterator))
                 {
-                    continue;
-                }
-                if (!SolveCell(new PuzzleIterator(iterator)))
-                {
-                    continue;
-                }
-                solved = true;
+                    return true;
+                }  
             }
-            return solved;
+            return false;
+        }
+
+        private bool PuzzleIsSolved(PuzzleIterator puzzleIterator)
+        {
+            return PuzzleIsValid() && SolveCell(new PuzzleIterator(puzzleIterator));
         }
 
         private bool PuzzleIsValid()
@@ -81,7 +76,7 @@ namespace SudokuSolver.Other
             while (!action.Execute(reduceCandidates));
         }
 
-        private bool GetNextUndefinedCell(PuzzleIterator iterator)
+        private bool FindNextUndefinedCell(PuzzleIterator iterator)
         {
             while (!iterator.IsDone())
             {

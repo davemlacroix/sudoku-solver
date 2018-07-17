@@ -71,23 +71,6 @@ namespace SudokuSolver.SudokuPuzzle
             public object State { get; set; }
         }
 
-        public bool IsCompleted()
-        {
-            //this needs to be replaced
-            for (int row = 0; row < 9; row++)
-            {
-                for (int col = 0; col < 9; col++)
-                {
-                    if(_puzzle[row, col].Value == CellValue.Unknown.Value)
-                    {
-                        return false;
-                    }
-                }
-            }
-
-            return true;
-        }
-
         private void ValidateIndex(int index)
         {
             if (index < 0 || index > 8)
