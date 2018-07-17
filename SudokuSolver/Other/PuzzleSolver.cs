@@ -20,8 +20,7 @@ namespace SudokuSolver.Other
             var iterator = new PuzzleIterator(_puzzle);
             iterator.First();
 
-            var action = new ActOnAllSegments(_puzzle);
-            while (!action.Execute(new ReduceCandidates()));
+            ReduceCandidates();
 
             return SolveCell(new PuzzleIterator(iterator));
         }
@@ -30,7 +29,7 @@ namespace SudokuSolver.Other
         {
             var savePuzzle = new Puzzle(_puzzle);
             var action = new ActOnAllSegments(_puzzle);
-            if (!FindNextEmptyCell(iterator))
+            if (!GetNextUndefinedCell(iterator))
             {
                 return true; //may not be solved;
             }
@@ -45,7 +44,7 @@ namespace SudokuSolver.Other
             var solved = false;
             foreach (var candidate in candidates)
             {
-                if(_puzzle.IsCompleted() && action.Execute(new ValidateSection()))
+                if (_puzzle.IsCompleted() && PuzzleIsValid())
                 {
                     return true;
                 }
@@ -53,10 +52,9 @@ namespace SudokuSolver.Other
                 _puzzle.SetMemento(memento);
 
                 iterator.SetCurrent(new Cell(candidate.Value));
-                action = new ActOnAllSegments(_puzzle);
-                while (!action.Execute(new ReduceCandidates())) ;
+                ReduceCandidates();
 
-                if (!action.Execute(new ValidateSection()))
+                if (!PuzzleIsValid())
                 {
                     continue;
                 }
@@ -69,7 +67,21 @@ namespace SudokuSolver.Other
             return solved;
         }
 
-        private bool FindNextEmptyCell(PuzzleIterator iterator)
+        private bool PuzzleIsValid()
+        {
+            var action = new ActOnAllSegments(_puzzle);
+            var validateSection = new ValidateSection();
+            return action.Execute(validateSection);
+        }
+
+        private void ReduceCandidates()
+        {
+            var action = new ActOnAllSegments(_puzzle);
+            var reduceCandidates = new ReduceCandidates();
+            while (!action.Execute(reduceCandidates));
+        }
+
+        private bool GetNextUndefinedCell(PuzzleIterator iterator)
         {
             while (!iterator.IsDone())
             {
@@ -79,7 +91,6 @@ namespace SudokuSolver.Other
                 }
                 iterator.Next();
             }
-
             return false;
         }
     }
