@@ -17,43 +17,49 @@ namespace SudokuSolver.Other
 
         public bool Solve()
         {
-            var iterator = new PuzzleIterator(_puzzle);
-            iterator.First();
-
+            var puzzleIterator = new PuzzleIterator(_puzzle);
+            puzzleIterator.First();
             ReduceCandidates();
 
-            return SolveCell(new PuzzleIterator(iterator));
+            return SolveCellsRecursively(new PuzzleIterator(puzzleIterator));
         }
 
-        private bool SolveCell(PuzzleIterator iterator)
+        private bool SolveCellsRecursively(PuzzleIterator puzzleIterator)
         {
-            if (!FindNextUndefinedCell(iterator))
+            if (FindNextUndefinedCell(puzzleIterator))
             {
-                return true; //may not be solved;
+                return TryEachCandidate(puzzleIterator);
             }
+            return PuzzleIsValid();
+        }
 
+        private bool TryEachCandidate(PuzzleIterator puzzleIterator)
+        {
             var memento = _puzzle.CreateMemento();
 
-            var candidates = iterator.GetCurrent().Candidates;
+            var candidates = puzzleIterator.GetCurrent().Candidates;
             foreach (var candidate in candidates)
             {
                 _puzzle.SetMemento(memento);
-
-                var cell = new Cell(candidate.Value);
-                iterator.SetCurrent(cell);
-                ReduceCandidates();
-
-                if(PuzzleIsSolved(iterator))
+                GuessCandidate(puzzleIterator, candidate);
+                if (PuzzleIsSolved(puzzleIterator))
                 {
                     return true;
-                }  
+                }
             }
             return false;
         }
 
+        private void GuessCandidate(PuzzleIterator puzzleIterator, CellValue candidate)
+        {
+            var cell = new Cell(candidate.Value);
+            puzzleIterator.SetCurrent(cell);
+            ReduceCandidates();
+        }
+
         private bool PuzzleIsSolved(PuzzleIterator puzzleIterator)
         {
-            return PuzzleIsValid() && SolveCell(new PuzzleIterator(puzzleIterator));
+            return PuzzleIsValid() && SolveCellsRecursively(new PuzzleIterator(puzzleIterator));
         }
 
         private bool PuzzleIsValid()
