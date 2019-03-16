@@ -6,6 +6,7 @@ using System.Collections.Generic;
 namespace SudokuSolverTest.SudoduPuzzle
 {
     [TestFixture]
+    [Category("Unit")]
     class CellTests
     {
         [Test]

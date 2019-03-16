@@ -5,6 +5,7 @@ using System;
 namespace SudokuSolverTest.SudoduPuzzle
 {
     [TestFixture]
+    [Category("Unit")]
     class CellValueTests
     {
         [Test]

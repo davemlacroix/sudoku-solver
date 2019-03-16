@@ -7,6 +7,7 @@ using SudokuSolver.SudokuPuzzle;
 namespace SudokuSolverTest.Actions
 {
     [TestFixture]
+    [Category("Unit")]
     class ReduceCandidatesTests
     {
         [Test]

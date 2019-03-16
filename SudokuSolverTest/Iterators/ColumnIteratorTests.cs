@@ -8,6 +8,7 @@ using System;
 namespace SudokuSolverTest.Iterators
 {
     [TestFixture]
+    [Category("Unit")]
     internal class ColumnIteratorTests
     {
         private Puzzle _puzzle;

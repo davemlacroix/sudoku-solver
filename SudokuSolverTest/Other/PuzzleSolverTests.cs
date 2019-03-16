@@ -6,6 +6,7 @@ using SudokuSolver.SudokuPuzzle;
 namespace SudokuSolverTest.Other
 {
     [TestFixture]
+    [Category("Integration")]
     class PuzzleSolverTests
     {
         [Test]

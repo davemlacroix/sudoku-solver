@@ -7,6 +7,7 @@ using SudokuSolver.Contracts;
 namespace SudokuSolverTest.Iterators
 {
     [TestFixture]
+    [Category("Unit")]
     class PuzzleIteratorFactoryTests
     {
         [Test]
