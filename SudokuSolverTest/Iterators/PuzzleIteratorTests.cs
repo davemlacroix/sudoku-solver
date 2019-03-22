@@ -105,5 +105,6 @@ namespace SudokuSolverTest.Iterators
             }
 
         }
+
     }
 }

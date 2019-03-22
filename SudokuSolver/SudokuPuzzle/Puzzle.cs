@@ -1,10 +1,12 @@
 ﻿using SudokuSolver.Contracts;
 using System;
-using SudokuSolver.Other;
+using System.Collections.Generic;
+using System.Collections;
+using SudokuSolver.Iterators;
 
 namespace SudokuSolver.SudokuPuzzle
 {
-    public class Puzzle
+    public class Puzzle : IEnumerable<ISegmentIterator>
     {
         private Cell[,] _puzzle;
 
@@ -38,6 +40,21 @@ namespace SudokuSolver.SudokuPuzzle
         public Puzzle(Puzzle puzzle)
         {
             _puzzle = CopyPuzzle(puzzle._puzzle);
+        }
+
+        public IEnumerable<ISegmentIterator> Segments
+        {
+            get { return this; }
+        }
+
+        public IEnumerator<ISegmentIterator> GetEnumerator()
+        {
+            return new SegmentIterator(this);
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return new SegmentIterator(this);
         }
 
         public void SetCell(Cell cell, int row, int col)
@@ -99,5 +116,6 @@ namespace SudokuSolver.SudokuPuzzle
             }
             return copy;
         }
+
     }
 }

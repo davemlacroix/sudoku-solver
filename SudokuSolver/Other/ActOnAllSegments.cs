@@ -17,18 +17,14 @@ namespace SudokuSolver.Actions
 
         public bool Execute(IAction actionType)
         {
-            var iterator = new SegmentIterator(_puzzle);
             var success = true;
-            
-            iterator.First();
-            while (!iterator.IsDone())
+
+            foreach(var segment in _puzzle.Segments)
             {
-                
-                if (!actionType.Execute(iterator.GetCurrent()))
+                if (!actionType.Execute(segment))
                 {
                     success = false;
                 }
-                iterator.Next();
             }
 
             return success;

@@ -39,57 +39,42 @@ namespace SudokuSolverTest.Iterators
         public void Constructor_WhenCalled_HasFirstIndex()
         {
 
-            ISegmentIterator segmentIterator = _iterator.GetCurrent();
+            _iterator.MoveNext();
+            ISegmentIterator segmentIterator = _iterator.Current;
             Assert.IsTrue(IteratorHasValues(segmentIterator, new int[] { 1, 2, 3, 0, 0, 4, 3, 4, 2 }));
 
         }
 
         [Test]
-        public void First_WhenCalled_HasFirstIndex()
+        public void Current_AfterReset_ThrowsInvalidOperationException()
         {
-            _iterator.Next();
-            _iterator.First();
-            ISegmentIterator segmentIterator = _iterator.GetCurrent();
-            Assert.IsTrue(IteratorHasValues(segmentIterator, new int[] { 1, 2, 3, 0, 0, 4, 3, 4, 2 }));
-        }
-
-        [Test]
-        public void IsDone_LastElement_ReturnsTrue()
-        {
-
-            for (int i = 0; i < Constants.NumberOfSegments; i++)
-            {
-                _iterator.Next();
-            }
-            Assert.IsTrue(_iterator.IsDone());
-        }
-
-        [Test]
-        public void IsDone_NotLastElement_ReturnsFalse()
-        {
-
-            for (int i = 0; i < Constants.NumberOfSegments; i++)
-            {
-                Assert.IsFalse(_iterator.IsDone());
-                _iterator.Next();
-            }
-        }
-
-        [Test]
-        public void Next_LastElement_ThrowsError()
-        {
-
-            for (int i = 0; i < Constants.NumberOfSegments; i++)
-            {
-                _iterator.Next();
-            }
-
+            _iterator.Reset();
             Assert.Throws<InvalidOperationException>(
-                 () => _iterator.Next());
+                 () => { var result = _iterator.Current; });
+        }
+
+
+        [Test]
+        public void MoveNext_NotLastElement_ReturnsTrue()
+        {
+            var success = _iterator.MoveNext();
+            Assert.IsTrue(success);
         }
 
         [Test]
-        public void Next_IteratesThroughSegments_ReturnsExpectedTypes()
+        public void MoveNext_LastElement_ReturnsFalse()
+        {
+            bool success = true;
+            for (int i = 0; i <= Constants.NumberOfSegments; i++)
+            {
+                success = _iterator.MoveNext();
+            }
+
+            Assert.IsFalse(success);
+        }
+
+        [Test]
+        public void MoveNext_IteratesThroughSegments_ReturnsExpectedTypes()
         {
             IteratorSegmentType<RowIterator>();
             IteratorSegmentType<ColumnIterator>();
@@ -100,8 +85,8 @@ namespace SudokuSolverTest.Iterators
         {
             for (int i = 0; i < Constants.NumberOfSegmentsByType; i++)
             {
-                _iterator.Next();
-                Assert.IsInstanceOf<SegmentType>(_iterator.GetCurrent());
+                _iterator.MoveNext();
+                Assert.IsInstanceOf<SegmentType>(_iterator.Current);
             }
         }
 
