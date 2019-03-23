@@ -1,9 +1,6 @@
-﻿using SudokuSolver.SudokuPuzzle;
+﻿using SudokuSolver.Contracts;
+using SudokuSolver.SudokuPuzzle;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SudokuSolver.Other
 {
@@ -18,14 +15,19 @@ namespace SudokuSolver.Other
 
         public void Print()
         {
-            for (int row = 0; row< 9; row++)
+
+            //this assumes the PuzzleIterator iterates through row by row
+            //which means this is coupled with PuzzleIterator
+            var col = 0;
+            foreach (var cell in _puzzle.Cells)
             {
-                for (int col = 0; col < 9; col++)
+                Console.Write(cell.Value);
+                Console.Write(" ");
+                if (++col >= Constants.NumberOfCellsInSegment)
                 {
-                    Console.Write(_puzzle.GetCell(row, col).Value);
-                    Console.Write(" ");
+                    Console.Write("\n");
+                    col = 0;
                 }
-                Console.Write("\n");
             }
         }
     }

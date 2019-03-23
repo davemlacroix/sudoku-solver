@@ -25,7 +25,7 @@ namespace SudokuSolverTest.Iterators
             { 0, 0, 8, 0, 0, 0, 0, 0, 0 },
             { 2, 0, 0, 0, 0, 0, 0, 0, 3 }
         };
-
+ 
 
         [SetUp]
         public void SetUp()

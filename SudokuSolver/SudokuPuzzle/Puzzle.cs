@@ -52,7 +52,7 @@ namespace SudokuSolver.SudokuPuzzle
             get { return this; }
         }
 
-        public IEnumerator<ISegmentIterator> GetEnumerator()
+        IEnumerator<ISegmentIterator> IEnumerable<ISegmentIterator>.GetEnumerator()
         {
             return new SegmentIterator(this);
         }
