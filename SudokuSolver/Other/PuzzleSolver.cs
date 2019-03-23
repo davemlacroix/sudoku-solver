@@ -18,7 +18,7 @@ namespace SudokuSolver.Other
         public bool Solve()
         {
             var puzzleIterator = new PuzzleIterator(_puzzle);
-            puzzleIterator.First();
+            puzzleIterator.MoveNext();
             ReduceCandidates();
 
             return SolveCellsRecursively(new PuzzleIterator(puzzleIterator));
@@ -37,7 +37,7 @@ namespace SudokuSolver.Other
         {
             var memento = _puzzle.CreateMemento();
 
-            var candidates = puzzleIterator.GetCurrent().Candidates;
+            var candidates = puzzleIterator.Current.Candidates;
             foreach (var candidate in candidates)
             {
                 _puzzle.SetMemento(memento);
@@ -78,13 +78,13 @@ namespace SudokuSolver.Other
 
         private bool FindNextUndefinedCell(PuzzleIterator iterator)
         {
-            while (!iterator.IsDone())
+            while (iterator.MoveNext())
             {
-                if (iterator.GetCurrent().Value == CellValue.Unknown.Value)
+                if (iterator.Current.Value == CellValue.Unknown.Value)
                 {
                     return true;
                 }
-                iterator.Next();
+                
             }
             return false;
         }

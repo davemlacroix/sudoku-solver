@@ -32,78 +32,52 @@ namespace SudokuSolverTest.Iterators
             _iterator = new PuzzleIterator(puzzle);
         }
 
-
         [Test]
-        public void Constructor_WhenCalled_IsOnFirstCell()
+        public void MoveNext_NotLastElement_ReturnsTrue()
         {
-            Assert.AreEqual(1, _iterator.GetCurrent().Value);
+            Assert.IsTrue(_iterator.MoveNext());
         }
 
         [Test]
-        public void First_WhenCalled_MovesToFirstCell()
+        public void MoveNext_LastElement_ReturnsFalse()
         {
-
-            _iterator.Next();
-            _iterator.Next();
-            _iterator.First();
-
-            Assert.AreEqual(1, _iterator.GetCurrent().Value);
-        }
-
-        [Test]
-        public void IsDone_LastElement_ReturnsTrue()
-        {
-
-            for (int i = 0; i < Constants.NumberOfCellsInPuzzle; i++)
+            bool success = true;
+            for (int i = 0; i <= Constants.NumberOfCellsInPuzzle; i++)
             {
-                _iterator.Next();
-            }
-            Assert.IsTrue(_iterator.IsDone());
-        }
-
-        [Test]
-        public void IsDone_NotLastElement_ReturnsFalse()
-        {
-
-            for (int i = 0; i < Constants.NumberOfCellsInPuzzle; i++)
-            {
-                Assert.IsFalse(_iterator.IsDone());
-                _iterator.Next();
-            }
-        }
-
-        [Test]
-        public void Next_LastElement_ThrowsError()
-        {
-
-            for (int i = 0; i < Constants.NumberOfCellsInPuzzle; i++)
-            {
-                _iterator.Next();
+                success = _iterator.MoveNext();
             }
 
-            Assert.Throws<InvalidOperationException>(
-                 () => _iterator.Next());
+            Assert.IsFalse(success);
         }
 
         [Test]
         public void SetCurrent_WhenUsed_ChangesValue()
         {
 
+            _iterator.MoveNext();
             _iterator.SetCurrent(new Cell(4));
 
-            Assert.AreEqual(4, _iterator.GetCurrent().Value);
+            Assert.AreEqual(4, _iterator.Current.Value);
         }
 
         [Test]
-        public void Next_WhenUsed_IteratesThroughPuzzle()
+        public void MoveNext_WhenUsed_IteratesThroughPuzzle()
         {
-
+            _iterator.MoveNext();
             foreach (int value in _testPuzzle)
             {
-                Assert.AreEqual(value, _iterator.GetCurrent().Value);
-                if (!_iterator.IsDone()) { _iterator.Next(); }
+                Assert.AreEqual(value, _iterator.Current.Value);
+                _iterator.MoveNext();
             }
 
+        }
+
+        [Test]
+        public void Current_AfterReset_ThrowsInvalidOperationException()
+        {
+            _iterator.Reset();
+            Assert.Throws<InvalidOperationException>(
+                 () => { var result = _iterator.Current; });
         }
 
     }

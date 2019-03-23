@@ -1,10 +1,12 @@
 ﻿using SudokuSolver.Contracts;
-using SudokuSolver.Other;
 using SudokuSolver.SudokuPuzzle;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace SudokuSolver.Iterators
 {
-    public class PuzzleIterator : IIterator
+    public class PuzzleIterator : IEnumerator<Cell>
     {
         private Puzzle _puzzle;
         private int _position;
@@ -18,32 +20,41 @@ namespace SudokuSolver.Iterators
         public PuzzleIterator(Puzzle puzzle)
         {
             _puzzle = puzzle;
-            _position = 0;
+            Reset();
         }
 
-        public void First()
+        public Cell Current
         {
-            _position = 0;
-        }
-
-        public void Next()
-        {
-            if (IsDone())
+            get
             {
-                throw new System.InvalidOperationException("Iterator has reached the end of section");
+                if (_position == -1)
+                {
+                    throw new InvalidOperationException();
+                }
+                return _puzzle.GetCell(GetRow(), GetCol());
+            }
+        }
+
+        object IEnumerator.Current
+        {
+            get { return _puzzle.GetCell(GetRow(), GetCol()); }
+        }
+
+        public void Reset()
+        {
+            _position = -1;
+        }
+
+        public bool MoveNext()
+        {
+
+            if (_position < Constants.NumberOfCellsInPuzzle-1)
+            {
+                _position++;
+                return true;
             }
 
-            _position++;
-        }
-
-        public bool IsDone()
-        {
-            return (_position >= Constants.NumberOfCellsInPuzzle);
-        }
-
-        public Cell GetCurrent()
-        {
-            return _puzzle.GetCell(GetRow(), GetCol());
+            return false;    
         }
 
         public void SetCurrent(Cell cell)
@@ -60,5 +71,7 @@ namespace SudokuSolver.Iterators
         {
             return _position % Constants.NumberOfCellsInSegment;
         }
+
+        public void Dispose() { }
     }
 }

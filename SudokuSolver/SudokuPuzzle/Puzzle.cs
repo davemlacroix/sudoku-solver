@@ -6,7 +6,7 @@ using SudokuSolver.Iterators;
 
 namespace SudokuSolver.SudokuPuzzle
 {
-    public class Puzzle : IEnumerable<ISegmentIterator>
+    public class Puzzle : IEnumerable<ISegmentIterator>, IEnumerable<Cell>
     {
         private Cell[,] _puzzle;
 
@@ -47,14 +47,24 @@ namespace SudokuSolver.SudokuPuzzle
             get { return this; }
         }
 
+        public IEnumerable<Cell> Cells
+        {
+            get { return this; }
+        }
+
         public IEnumerator<ISegmentIterator> GetEnumerator()
         {
             return new SegmentIterator(this);
         }
 
+        IEnumerator<Cell> IEnumerable<Cell>.GetEnumerator()
+        {
+            return new PuzzleIterator(this);
+        }
+
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return new SegmentIterator(this);
+            return new PuzzleIterator(this);
         }
 
         public void SetCell(Cell cell, int row, int col)
