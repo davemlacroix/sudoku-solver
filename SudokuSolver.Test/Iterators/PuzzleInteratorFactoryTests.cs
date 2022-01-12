@@ -4,7 +4,7 @@ using SudokuSolver.SudokuPuzzle;
 using SudokuSolver.Iterators;
 using SudokuSolver.Contracts;
 
-namespace SudokuSolverTest.Iterators
+namespace SudokuSolver.Test.Iterators
 {
     [TestFixture]
     [Category("Unit")]

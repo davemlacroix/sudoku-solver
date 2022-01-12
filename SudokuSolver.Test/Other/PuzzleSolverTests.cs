@@ -3,7 +3,7 @@ using SudokuSolver.Actions;
 using SudokuSolver.Other;
 using SudokuSolver.SudokuPuzzle;
 
-namespace SudokuSolverTest.Other
+namespace SudokuSolver.Test.Other
 {
     [TestFixture]
     [Category("Integration")]

@@ -2,7 +2,7 @@
 using SudokuSolver.SudokuPuzzle;
 using System;
 
-namespace SudokuSolverTest.SudoduPuzzle
+namespace SudokuSolver.Test.SudoduPuzzle
 {
     [TestFixture]
     [Category("Unit")]

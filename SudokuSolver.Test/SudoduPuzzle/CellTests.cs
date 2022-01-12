@@ -3,7 +3,7 @@ using NUnit.Framework;
 using SudokuSolver.SudokuPuzzle;
 using System.Collections.Generic;
 
-namespace SudokuSolverTest.SudoduPuzzle
+namespace SudokuSolver.Test.SudoduPuzzle
 {
     [TestFixture]
     [Category("Unit")]
