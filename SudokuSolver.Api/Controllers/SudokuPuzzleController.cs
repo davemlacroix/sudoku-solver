@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
 using SudokuSolver.Api.Models;
 
 namespace SudokuSolver.Api.Controllers
@@ -8,6 +9,20 @@ namespace SudokuSolver.Api.Controllers
     [Route("api/puzzles")]
     public class SudokuPuzzleController : ControllerBase
     {
+
+        [HttpHead]
+        public IActionResult Head()
+        {
+            return Ok();
+        }
+
+        [HttpOptions]
+        public IActionResult Options()
+        {
+            Response.Headers.Add("Allow", new StringValues(new[] { "HEAD", "GET", "OPTIONS" }));
+            return Ok();
+        }
+
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
