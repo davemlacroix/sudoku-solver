@@ -6,17 +6,21 @@ using SudokuSolver.Api.Models;
 namespace SudokuSolver.Api.Controllers
 {
     [ApiController]
+    [Produces("application/json")]
     [Route("api/puzzles")]
     public class SudokuPuzzleController : ControllerBase
     {
 
+        
         [HttpHead]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public IActionResult Head()
         {
             return Ok();
         }
 
         [HttpOptions]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public IActionResult Options()
         {
             Response.Headers.Add("Allow", new StringValues(new[] { "HEAD", "GET", "OPTIONS" }));
