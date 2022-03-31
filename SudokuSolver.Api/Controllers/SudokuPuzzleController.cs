@@ -5,10 +5,10 @@ using SudokuSolver.Api.Models;
 namespace SudokuSolver.Api.Controllers
 {
     [ApiController]
-    [Route("api/puzzle")]
+    [Route("api/puzzles")]
     public class SudokuPuzzleController : ControllerBase
     {
-        
+
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public IActionResult Get()
