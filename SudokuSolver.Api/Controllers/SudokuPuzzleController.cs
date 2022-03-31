@@ -36,6 +36,14 @@ namespace SudokuSolver.Api.Controllers
             return Ok(puzzle);
         }
 
+        [HttpGet("/solution")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IActionResult Get([FromQuery] SudokuPuzzleModel sudokuPuzzle)
+        {
+            return Ok(sudokuPuzzle);
+        }
+
+
         private SudokuPuzzleModel GetSudokuPuzzle()
         {
             return new SudokuPuzzleModel
