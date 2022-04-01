@@ -8,5 +8,6 @@ namespace SudokuSolver.Api.Models
     public class ValidatedPuzzleResponse
     {
         public bool Valid { get; set; }
+        public bool Solved { get; set; }
     }
 }

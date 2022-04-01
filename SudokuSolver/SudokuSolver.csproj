@@ -56,6 +56,7 @@
     <Compile Include="Iterators\SubGridIterator.cs" />
     <Compile Include="Contracts\Constants.cs" />
     <Compile Include="Other\PrintPuzzle.cs" />
+    <Compile Include="Other\PuzzleCompletedValidator.cs" />
     <Compile Include="Other\PuzzleSolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SudokuPuzzle\Cell.cs" />

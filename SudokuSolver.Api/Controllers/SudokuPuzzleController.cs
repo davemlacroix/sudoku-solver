@@ -49,10 +49,13 @@ namespace SudokuSolver.Api.Controllers
             var puzzleMapper = new SudokuPuzzleMapper();
             Puzzle internalPuzzle = puzzleMapper.ConvertApiModelToInternalModel(sudokuPuzzle);
             var puzzleSolver = new PuzzleSolver(internalPuzzle);
+            var completedValidator = new PuzzleCompletedValidator(internalPuzzle);
+            
 
             var response = new ValidatedPuzzleResponse()
             { 
-                Valid = puzzleSolver.PuzzleIsValid()
+                Valid = puzzleSolver.PuzzleIsValid(),
+                Solved = puzzleSolver.PuzzleIsValid() && completedValidator.PuzzleIsCompleted()
             };
             return Ok(response);
         }
