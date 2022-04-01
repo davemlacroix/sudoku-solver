@@ -24,7 +24,7 @@ namespace SudokuSolver.Api.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public IActionResult Options()
         {
-            Response.Headers.Add("Allow", new StringValues(new[] { "HEAD", "GET", "OPTIONS" }));
+            Response.Headers.Add("Allow", new StringValues(new[] { "HEAD", "GET", "POST", "OPTIONS" }));
             return Ok();
         }
 
