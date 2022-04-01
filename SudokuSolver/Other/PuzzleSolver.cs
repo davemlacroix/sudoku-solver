@@ -24,6 +24,13 @@ namespace SudokuSolver.Other
             return SolveCellsRecursively(new PuzzleIterator(puzzleIterator));
         }
 
+        public bool PuzzleIsValid()
+        {
+            var action = new ActOnAllSegments(_puzzle);
+            var validateSection = new ValidateSection();
+            return action.Execute(validateSection);
+        }
+
         private bool SolveCellsRecursively(PuzzleIterator puzzleIterator)
         {
             if (FindNextUndefinedCell(puzzleIterator))
@@ -60,13 +67,6 @@ namespace SudokuSolver.Other
         private bool PuzzleIsSolved(PuzzleIterator puzzleIterator)
         {
             return PuzzleIsValid() && SolveCellsRecursively(new PuzzleIterator(puzzleIterator));
-        }
-
-        private bool PuzzleIsValid()
-        {
-            var action = new ActOnAllSegments(_puzzle);
-            var validateSection = new ValidateSection();
-            return action.Execute(validateSection);
         }
 
         private void ReduceCandidates()

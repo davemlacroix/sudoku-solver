@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using SudokuSolver.Api.Models;
 using SudokuSolver.Api.Services;
+using SudokuSolver.Other;
+using SudokuSolver.SudokuPuzzle;
 
 namespace SudokuSolver.Api.Controllers
 {
@@ -38,6 +40,21 @@ namespace SudokuSolver.Api.Controllers
                 return Ok(puzzle);
             }
             return NotFound();
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public IActionResult Post([FromBody] SudokuPuzzleModel sudokuPuzzle)
+        {
+            var puzzleMapper = new SudokuPuzzleMapper();
+            Puzzle internalPuzzle = puzzleMapper.ConvertApiModelToInternalModel(sudokuPuzzle);
+            var puzzleSolver = new PuzzleSolver(internalPuzzle);
+
+            var response = new ValidatedPuzzleResponse()
+            { 
+                Valid = puzzleSolver.PuzzleIsValid()
+            };
+            return Ok(response);
         }
 
     }
