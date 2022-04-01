@@ -30,7 +30,7 @@ namespace SudokuSolver.Api.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public IActionResult Post([FromBody] SudokuPuzzleModel sudokuPuzzle)
+        public IActionResult Get([FromBody] SudokuPuzzleModel sudokuPuzzle)
         {
             var puzzleMapper = new SudokuPuzzleMapper();
             Puzzle internalPuzzle = puzzleMapper.ConvertApiModelToInternalModel(sudokuPuzzle);
