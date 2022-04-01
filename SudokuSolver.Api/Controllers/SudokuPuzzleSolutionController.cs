@@ -28,7 +28,7 @@ namespace SudokuSolver.Api.Controllers
             return Ok();
         }
 
-        [HttpPost]
+        [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public IActionResult Post([FromBody] SudokuPuzzleModel sudokuPuzzle)
         {
