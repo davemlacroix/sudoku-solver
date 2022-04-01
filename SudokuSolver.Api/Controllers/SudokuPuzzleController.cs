@@ -2,6 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using SudokuSolver.Api.Models;
+using SudokuSolver.Api.Services;
+using SudokuSolver.Other;
+using SudokuSolver.SudokuPuzzle;
 
 namespace SudokuSolver.Api.Controllers
 {
@@ -11,7 +14,7 @@ namespace SudokuSolver.Api.Controllers
     public class SudokuPuzzleController : ControllerBase
     {
 
-        
+
         [HttpHead]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public IActionResult Head()
@@ -36,11 +39,18 @@ namespace SudokuSolver.Api.Controllers
             return Ok(puzzle);
         }
 
-        [HttpGet("/solution")]
+
+        [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public IActionResult Get([FromQuery] SudokuPuzzleModel sudokuPuzzle)
+        public IActionResult Post([FromBody] SudokuPuzzleModel sudokuPuzzle)
         {
-            return Ok(sudokuPuzzle);
+            var puzzleMapper = new SudokuPuzzleMapper();
+            Puzzle internalPuzzle = puzzleMapper.ConvertApiModelToInternalModel(sudokuPuzzle);
+            var puzzleSolver = new PuzzleSolver(internalPuzzle);
+            puzzleSolver.Solve();
+            SudokuPuzzleModel responsePuzzle = puzzleMapper.ConvertInteralModelToApiModel(internalPuzzle);
+            return Ok(responsePuzzle);
+
         }
 
 

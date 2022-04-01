@@ -18,7 +18,12 @@ namespace SudokuSolver.Api.Services
             {
                 for(int j=0; j<9; j++)
                 {
-                    puzzle[i,j] = apiModel.Puzzle[i][j].Value ?? 0;
+                    int value = 0;
+                    if (apiModel.Puzzle[i][j].Value.HasValue)
+                    {
+                        value = apiModel.Puzzle[i][j].Value.Value;
+                    }
+                    puzzle[i, j] = value;
                 }
             }
             
