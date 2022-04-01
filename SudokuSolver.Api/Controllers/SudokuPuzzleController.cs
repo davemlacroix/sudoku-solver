@@ -8,7 +8,7 @@ namespace SudokuSolver.Api.Controllers
 {
     [ApiController]
     [Produces("application/json")]
-    [Route("api/puzzles")]
+    [Route("api/puzzles/{id?}")]
     public class SudokuPuzzleController : ControllerBase
     {
         [HttpHead]
@@ -29,10 +29,15 @@ namespace SudokuSolver.Api.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public IActionResult Get()
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult Get(int? id)
         {
-            SudokuPuzzleModel puzzle = new SudokuPuzzleGateway().GetPuzzle(0);
-            return Ok(puzzle);
+            SudokuPuzzleModel puzzle = new SudokuPuzzleGateway().GetPuzzle(id);
+            if(puzzle != null)
+            {
+                return Ok(puzzle);
+            }
+            return NotFound();
         }
 
     }
